@@ -17,15 +17,14 @@ function reducer(state, { type, payload }) {
     //case 1 - add digit
     case ACTIONS.ADD_DIGIT:
       //check for overwrite condition
-      if(state.overwrite){
+      if (state.overwrite) {
         //set currentOperand = entered digit
         //set overwrite to 'false'
         return {
           ...state,
-          currentOperand : payload.digit,
-          overwrite : false
+          currentOperand: payload.digit,
+          overwrite: false,
         };
-
       }
 
       if (payload.digit === "0" && state.currentOperand === "0") {
@@ -85,47 +84,43 @@ function reducer(state, { type, payload }) {
       ) {
         return state;
       }
-    
-    //if we have every variables available in the state then 
-    return{
-      ...state,
-      //adding a new value called overwrite for handling overwriting after evaluation
-      overwrite : true,
 
-      previousOperand : null,
-      currentOperand : evaluate(state),
-      operation : null
-    }
-    
+      //if we have every variables available in the state then
+      return {
+        ...state,
+        //adding a new value called overwrite for handling overwriting after evaluation
+        overwrite: true,
+
+        previousOperand: null,
+        currentOperand: evaluate(state),
+        operation: null,
+      };
+
     //case5 - delete-digit
     case ACTIONS.DELETE_DIGIT:
-      if(state.overwrite){
+      if (state.overwrite) {
         return {
           ...state,
-          overwrite:false,
-          currentOperand:null,
-        }
-      } 
-      if(state.currentOperand == null){
-        return state
+          overwrite: false,
+          currentOperand: null,
+        };
+      }
+      if (state.currentOperand == null) {
+        return state;
       }
 
       //only one digit in current operand
-      if(state.currentOperand.length === 1){
+      if (state.currentOperand.length === 1) {
         return {
           ...state,
           currentOperand: null,
         };
       }
 
-      return{
+      return {
         ...state,
-        currentOperand : state.currentOperand.slice(0,-1)
-      }
- 
- 
- 
- 
+        currentOperand: state.currentOperand.slice(0, -1),
+      };
   }
 }
 
@@ -160,6 +155,26 @@ function evaluate({ currentOperand, previousOperand, operation }) {
   return computation.toString();
 }
 
+//adding a digit formater
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
+  maximumFractionDigits: 0,
+});
+
+//function to format operand
+function formatOperand(operand){
+  //check if operand is null then do nothing
+  if (operand == null) return
+
+  //else split the integer and fraction part 
+  const [integer,decimal] = operand.split(".");
+
+  //if decimal is null then format only the integer part
+  if (decimal == null) return INTEGER_FORMATTER.format(integer)
+
+  //default if decimal is present
+  return `${INTEGER_FORMATTER.format(integer)}.${decimal}`;
+}
+
 function App() {
   const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
     reducer,
@@ -170,9 +185,9 @@ function App() {
     <div className="calculator-grid">
       <div className="output">
         <div className="previous-operand">
-          {previousOperand} {operation}
+          {formatOperand(previousOperand)} {operation}
         </div>
-        <div className="current-operand">{currentOperand}</div>
+        <div className="current-operand">{formatOperand(currentOperand)}</div>
       </div>
       <button
         className="span-two"
