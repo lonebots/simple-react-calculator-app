@@ -2,6 +2,8 @@
 
 A calculator app build using React to learn the usage of **useReducer** hook.
 
+<img src="https://github.com/lonebots/Simple-React-Calculator-App/blob/master/resource/simplecalculator.png" >
+
 ### scripts
 
 In the project directory, you can run:
