@@ -4,8 +4,9 @@
 A simple react application for doing mathematical operations (calculator) and build to learn 
 implementation of **useReducer** hook.
 
-<img src="https://github.com/lonebots/Simple-React-Calculator-App/blob/master/resource/simplecalculator.png" >
-
+<p align="center">
+<img src="resource/simplecalculator.png" alt="livedemo" height="500" widht="auto">
+</p> 
 
 The Application was build using following technologies: 
 - ReactJs
