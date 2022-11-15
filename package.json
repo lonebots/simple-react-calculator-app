@@ -1,5 +1,6 @@
 {
   "name": "simple-calculator",
+  "homepage": "https://lonebots.github.io/simple-react-calculator-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
